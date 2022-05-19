@@ -1,0 +1,87 @@
+extends layout/layout
+
+block layout-content
+ .container.section-main
+  h2(style="text-align: center;") TODOLIST
+   
+  form.row.row-cols-lg-auto.g-3.justify-content-center.align-items-center.mb-4.pb-2(name = "delete-course-form", method="POST")  
+    table.table.table-success.table-striped
+      thead
+        tr
+          th ID User
+          th Name
+          th Email
+          th Avatar    
+          th Action 1
+          th Action 2          
+      tbody
+      
+      for val in user
+        tr
+          td #{val.idUser}
+             
+          td #{val.name}
+             
+          td #{val.email}
+             
+          td
+           img(src=`./uploads/avatars/${val.emoji}`,style="width:50px;height:50px")
+                 
+          td
+            a(href=`/web/home/${val.id}/edit`)
+              button.btn.btn-success(type="button")
+                span.oi.oi-wrench
+                |  Sửa
+          td
+            a
+              button.btn.btn-danger(type="button", data-toggle="modal", data-target="#delete-course-modal", data-id=`${val.id}`)
+                span.oi.oi-delete
+                |  Xóa
+
+  
+  //-  delete modal             
+ .modal.fade#delete-course-modal(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        h5.modal-title#exampleModalLabel Modal title
+        button.close(type="button", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true") ×
+      .modal-body.
+        
+        Are you sure to delete it?
+        
+      .modal-footer
+        button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary#btn-delete-course(type="button") Delete
+
+    //- //Handler JS Modal    
+ script.
+
+  document.addEventListener("DOMContentLoaded", function() {
+     var userId;
+     var deleteForm = document.forms['delete-course-form'];
+     var btnDeleCourse = document.getElementById('btn-delete-course');
+      $('#delete-course-modal').on('show.bs.modal', function(event) {
+     var button = $(event.relatedTarget);
+     userId = button.data('id');
+     
+  });
+  var btnDeleCourse = document.getElementById('btn-delete-course');
+  btnDeleCourse.onclick = function() {    
+    deleteForm.action = `/web/home/${userId}?_method=DELETE`;
+    deleteForm.submit()
+  }
+
+  });
+  
+
+
+
+      
+
+
+          
+                 
+            
+     

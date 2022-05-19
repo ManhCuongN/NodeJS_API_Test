@@ -1,0 +1,34 @@
+extends ../layout/layout
+
+block layout-content
+ .main
+  form.form#form-1(action = "/web/auth/signup_data", method="POST",enctype="multipart/form-data")
+    h3.heading Thành viên đăng ký
+    p.desc  ❤️
+    .spacer
+    if typeof alert !== "undefined"
+     for val in alert
+        .alert.alert-danger(role="alert") #{val.msg}
+    else
+    .form-group
+      label.form-label(for="id") ID
+      input#email.form-control(name="id", type="text", placeholder="VD: cuong123")
+      span.form-message
+    .form-group
+      label.form-label(for="email") Email
+      input#email.form-control(name="email", type="text", placeholder="VD: email@domain.com")
+      span.form-message
+    .form-group
+      label.form-label(for="name") Name
+      input#email.form-control(name="name", type="text" placeholder="Nhập Username")
+      span.form-message
+    .form-group
+      label.form-label(for="password") Mật khẩu
+      input#password.form-control(name="password", type="password", placeholder="Nhập mật khẩu")
+      span.form-message
+
+    .form-group
+      input.input-group.input-file(type="file", name="upload")
+      button.form-submit Đăng ký
+    a(href="/web/auth/login") Đã có tài khoản
+    

@@ -1,0 +1,50 @@
+//- extends ../layout/layout
+
+
+//- block layout-content
+//-  section.vh-100
+//-   .py-5.h-100.conatiner
+//-     .row.d-flex.justify-content-center.align-items-center.h-100
+//-       .col.col-lg-9.col-xl-7
+//-         .rounded-3
+//-           .card-body.p-4
+//-             h4.text-center.my-3.pb-3 To Do App
+//-             form.row.row-cols-lg-auto.g-3.justify-content-center.align-items-center.mb-4.pb-2(action = `/web/home/${product._id}?_method=PUT`, method="POST")
+//-               .col-12
+//-                 .form-outline
+//-                   input#form1.form-control(name="title", type="text", placeholder="Nhập tại đây" value=`${product.title}`)
+//-                   label.form-label(for="form1") Enter a task here
+//-               .col-12
+//-                 button.btn.btn-warning(type="submit").
+                  
+//-                   Get tasks
+
+extends ../layout/layout
+
+block layout-content
+ .main
+  form.form#form-1(action = `/web/home/${user._id}?_method=PUT`, method="POST",enctype="multipart/form-data")
+    h3.heading Chỉnh sửa thông tin
+    p.desc  ❤️
+    .spacer
+    if typeof alert !== "undefined"
+     for val in alert
+        .alert.alert-danger(role="alert") #{val.msg}
+    else
+    .form-group
+      label.form-label(for="id") ID
+      input#email.form-control(name="id", type="text", value=`${user.idUser}`)
+      span.form-message
+    .form-group
+      label.form-label(for="email") Email
+      input#email.form-control(name="email", type="text", value=`${user.email}`)
+      span.form-message
+    .form-group
+      label.form-label(for="name") Name
+      input#email.form-control(name="name", type="text", value=`${user.name}`)
+      span.form-message
+    .form-group
+      input.input-group.input-file(type="file", name="upload")
+      button.form-submit Edit
+    
+    
