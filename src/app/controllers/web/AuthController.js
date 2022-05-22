@@ -22,7 +22,14 @@ class AuthController {
     return;
   } 
   else {
-    const path = req.file.filename
+    var path
+    if(req.file) {
+       path = req.file.filename
+    }
+    else {
+      path = 'avtdefault.jpg'
+    }
+
     User.findOne({ email: req.body.email })
       .then((data) => {
         if (data) {
@@ -34,7 +41,7 @@ class AuthController {
               email : req.body.email,
               name : req.body.name,
               password : crypto.createHash('sha256').update(req.body.password).digest('base64'),
-              emoji : path || ''
+              emoji : path
             }
           );
           return user
@@ -46,7 +53,7 @@ class AuthController {
        }
      })
       .catch((err) => alert("Kiểm tra lại thông tin các trường"))
-  }
+   }
    
 
   }
