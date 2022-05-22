@@ -19,20 +19,28 @@ class HomeController {
   }
 
   //Update
-  updateInfo(req, res, next) {
-  
-    User.updateOne({ _id: req.params.id }, {
+  updateInfo = async(req, res, next) => {
+   const user = await User.findById({_id: req.params.id})
+   let newEmoji
+   if(req.file) {
+      newEmoji = req.file.filename
+   }
+   else {
+     newEmoji = user.emoji
+   }
+
+   await User.updateOne({ _id: req.params.id }, {
       idUser : req.body.id,
       name : req.body.name,
       email : req.body.email,    
-      emoji : req.file.filename
+      emoji : newEmoji
     
     })
       .then(() => {
         res.redirect("/");
       })
       .catch(err => {
-        console.log(err);
+        alert(err)
       })
   }
   //DELETE

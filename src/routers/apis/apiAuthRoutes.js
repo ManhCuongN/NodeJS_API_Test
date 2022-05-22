@@ -7,6 +7,6 @@ const upload = require("../../app/middelwares/uploadImage")
 
 router.post("/login", validate.validateLoginUser(),validate.validationLoginError,authController.loginApiUser);
 
-router.post("/signup",upload.single("upload"),validate.validateRegisterUser(),validate.validationRegError, authController.signUpUser);
+router.post("/signup",upload.single("upload"),validate.validateRegisterUser(), authController.signUpUser);
 
 module.exports = router;

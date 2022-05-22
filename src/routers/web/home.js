@@ -7,6 +7,7 @@ router.get("/", homeController.show);
 
 router.get(
   "/web/home/:id/edit",
+  upload.single("upload"),
   homeController.editInfo
 );
 router.put(

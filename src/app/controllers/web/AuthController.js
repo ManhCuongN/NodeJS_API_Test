@@ -1,6 +1,8 @@
 const User = require("../../model/User");
 var crypto = require('crypto');
 var alert = require('alert');
+var {validationResult} = require('express-validator');
+const validate = require('../../validator/validatorForm');
 class AuthController {
   //render form resgister
   renderSignUp(req, res, next) {
@@ -14,11 +16,17 @@ class AuthController {
 
   //Post data sign up
   createUser(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(alert);
+    return;
+  } 
+  else {
     const path = req.file.filename
     User.findOne({ email: req.body.email })
       .then((data) => {
         if (data) {
-          res.status(300).json("Email đã tồn tại");
+          alert("Email đã tồn tại")
         } else {
           const user = new User(
             {
@@ -26,18 +34,21 @@ class AuthController {
               email : req.body.email,
               name : req.body.name,
               password : crypto.createHash('sha256').update(req.body.password).digest('base64'),
-              emoji : path
+              emoji : path || ''
             }
           );
           return user
             .save()
             .then(() => res.redirect("/web/auth/login"))
             .catch((error) => {
-              res.json(error);
+              alert("Kiểm tra lại thông tin các trường")
             });
        }
      })
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => alert("Kiểm tra lại thông tin các trường"))
+  }
+   
+
   }
 
   //Login User
@@ -48,11 +59,11 @@ class AuthController {
 
       const user = await User.findOne({ username: iUsername,password : isCorrectPassword });
       if (!user) {
-        throw new Error();
+        alert("Kiểm tra lại ID hoặc Password")
       }
       
       if (!isCorrectPassword) {
-        throw new Error();
+        alert("Kiểm tra Password")
       }
 
       if(user && isCorrectPassword) {
